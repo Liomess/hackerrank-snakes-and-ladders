@@ -1,0 +1,24 @@
+from collections import deque
+def quickestWayUp(ladders, snakes):
+    q=deque()
+    q.append([1,0])
+    visited=[False]*101
+    visited[1]=True
+    d={}
+    for x,y in ladders:
+        d[x]=y
+    for x,y in snakes:
+        d[x]=y
+    while q:
+        node,step=q.popleft()
+        if node==100:
+            return step
+        for i in range(1,7):
+            new=node+i
+            if new<=100 and visited[new]==False:
+                if new in d:
+                    q.append([d[new],step+1])
+                else:
+                    q.append([new,step+1])
+                visited[new]=True
+    return -1
